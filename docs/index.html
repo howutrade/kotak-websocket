@@ -33,13 +33,34 @@
 <p><code>40</code><br /><code>0{"sid":"_QmZIS7Diwsp459VAAEq", "upgrades":[],"pingInterval":25000,"pingTimeout":5000}</code><br /><code>42["message","welcome to Streamer IO (Build: 20200709). ")</code></p>
 <p><br /><strong>Full Example using Websocket4Net:</strong></p>
 <p>&nbsp;</p>
-<pre> Private Websock As WebSocket
+<pre>
+Module KotakSocket
+    ''' <summary>
+    ''' Basic Example
+    ''' Modify as required
+    ''' Add error handling
+    ''' </summary>
+
+    Private Websock As WebSocket
+
+    Sub main()
+        Dim ConsumerKey As String = "xxxxxxx"
+        Dim ConsumerSecret As String = "yyyyyy"
+
+        Dim token As String = GetTokenWebSock(ConsumerKey, ConsumerSecret)
+        If Not String.IsNullOrEmpty(token) Then
+            Connect(token)
+            '//Start the Ping loop after successful connect
+        End If
+
+        Console.ReadKey()
+    End Sub
 
     Private Function GetTokenWebSock(ByVal ConsumerKey As String, ByVal ConsumerSecret As String) As String
         Try
-            Dim auth As String = ConsumerKey &amp; ":" &amp; ConsumerSecret
+            Dim auth As String = ConsumerKey & ":" & ConsumerSecret
             Dim authBase64 As String = Convert.ToBase64String(Encoding.UTF8.GetBytes(auth))
-            Dim json As String = "{" &amp; """" &amp; "authentication" &amp; """" &amp; ": " &amp; """" &amp; authBase64 &amp; """" &amp; "}"
+            Dim json As String = "{" & """" & "authentication" & """" & ": " & """" & authBase64 & """" & "}"
 
             Using client As New WebClient
                 client.Headers(HttpRequestHeader.ContentType) = "application/json"
@@ -55,7 +76,7 @@
     End Function
 
     Private Sub Connect(ByVal tokenWebsock As String)
-        Websock = New WebSocket("wss://wstreamer.kotaksecurities.com" &amp; "/feed/?EIO=3&amp;transport=websocket&amp;access_token=" &amp; tokenWebsock, "", WebSocketVersion.Rfc6455)
+        Websock = New WebSocket("wss://wstreamer.kotaksecurities.com" & "/feed/?EIO=3&transport=websocket&access_token=" & tokenWebsock, "", WebSocketVersion.Rfc6455)
 
         Websock.Security.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 '//Onll Tls2 supported by Kotak
 
@@ -73,7 +94,7 @@
     End Sub
 
     Private Sub WebSockMessageReceived(sender As Object, e As WebSocket4Net.MessageReceivedEventArgs)
-        Console.WriteLine("message received from socket: " &amp; e.Message)
+        Console.WriteLine("message received from socket: " & e.Message)
         '//Do data parsing here
     End Sub
 
@@ -83,7 +104,7 @@
     End Sub
 
     Private Sub WebSockError(sender As Object, e As SuperSocket.ClientEngine.ErrorEventArgs)
-        Console.WriteLine("socket error: " &amp; e.Exception.Message)
+        Console.WriteLine("socket error: " & e.Exception.Message)
         '//Do retry logic here
     End Sub
 
@@ -94,5 +115,6 @@
             Websock.Send("3")
         Loop
     End Sub
-  </pre>
+End Module
+</pre>
 <p><strong>References:</strong><br /><a href="https://stackoverflow.com/questions/24564877/what-do-these-numbers-mean-in-socket-io-payload" target="_blank">https://stackoverflow.com/questions/24564877/what-do-these-numbers-mean-in-socket-io-payload</a></p>
