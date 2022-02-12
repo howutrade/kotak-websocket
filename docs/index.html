@@ -99,7 +99,8 @@ Module KotakSocket
     End Function
 
     Private Sub Connect(ByVal tokenWebsock As String)
-        Websock = New WebSocket("wss://wstreamer.kotaksecurities.com" & "/feed/?EIO=3&transport=websocket&access_token=" & tokenWebsock, "", WebSocketVersion.Rfc6455)
+        Websock = New WebSocket("wss://wstreamer.kotaksecurities.com" & "/feed/?EIO=3&transport=websocket&access_token=" & _
+        tokenWebsock, "", WebSocketVersion.Rfc6455)
 
         Websock.Security.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12 '//Onll Tls2 supported by Kotak
 
