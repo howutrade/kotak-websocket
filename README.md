@@ -94,5 +94,39 @@ If the welcome message is received as "broadcast", disconnect and connect gain w
 42["message","welcome to Streamer IO (Build: 20200709). ")
 ```
 
+## Price Fields Supported by Kotak Websocket:
+
+0. reqnum (ignore)
+1. token
+2. Best buy price
+3. Best buy quantity
+4. Best sell price
+5. Best sell quantity
+6. Last trade price
+7. High price
+8. Low price
+9. Average trade price
+10. Closing price
+11. Open price
+12. Net change percentage
+13. Total sell quantity
+14. Total buy quantity
+15. Total trade quantity
+16. Open Interest
+17. Total trade value
+18. Last trade quantity
+19. Last trade time
+20. Net change
+21. Upper circuit limit
+22. Lower circuit limit
+
+The live quotes are received in the same sequence as above in the websocket.
+
+### Sample Response:
+
+```
+42["getdata",["0167101","44597","5628.0000","1700","5630.0000","5800","5629.0000","5725.0000","5603.0000","5666.0000","5735.0000","5706.0000","-1.8483","179500","160500","5323200","7877","3016123380000.00","1","31/12/2021 23:03:02","-106.0000","5964.0000","5506.0000"]]
+```
+
 ## References:
 https://stackoverflow.com/questions/24564877/what-do-these-numbers-mean-in-socket-io-payload
